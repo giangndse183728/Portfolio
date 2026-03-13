@@ -14,6 +14,7 @@ export function useHeroIntroAnimation(
     mm.add("(min-width: 768px)", () => {
       gsap.set(mainContentRef.current, { autoAlpha: 0 });
       gsap.set("[data-hero-navbar]", { autoAlpha: 0 });
+      gsap.set(avatarRef.current, { xPercent: -50, x: 0 });
       if (rightColumnRef.current) {
         gsap.set(rightColumnRef.current, { autoAlpha: 0, x: 80 });
       }
@@ -22,17 +23,21 @@ export function useHeroIntroAnimation(
 
       tl.fromTo(
         avatarRef.current,
-        { scale: 0.8, autoAlpha: 0, y: 80 },
+        { scale: 0.8, autoAlpha: 0, y: 80, xPercent: -50, x: 0 },
         {
           scale: 1.1,
           autoAlpha: 1,
           y: 0,
+          xPercent: -50,
+          x: 0,
           duration: 0.9,
           ease: "power3.out",
         },
       )
         .to(avatarRef.current, {
           scale: 1,
+          xPercent: -50,
+          x: 0,
           duration: 0.7,
           ease: "power2.inOut",
         })
