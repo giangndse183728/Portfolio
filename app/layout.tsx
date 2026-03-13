@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     title: "Giang Nguyen | Frontend & UI/UX Portfolio",
     description:
       "Explore DNILB's work as a Frontend and UI/UX designer — from sleek landing pages to immersive web experiences.",
-    images: ["/images/thumbnail.png"],
+    images: ["/images/port-mock.png"],
   },
 };
 
