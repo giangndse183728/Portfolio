@@ -148,13 +148,21 @@ export default function MyContact() {
           />
         </div>
 
-        <span
-            className="pointer-events-none inline-flex items-center gap-1.5 rounded-full px-6 py-3 text-[11px] font-bold uppercase tracking-[0.15em] text-neu-heading"
+        <div
+          ref={buttonRef}
+          className="absolute inset-x-0 top-1/2 z-20 mt-32 flex justify-center"
+        >
+          <span
+            className="inline-flex items-center gap-1.5 rounded-full px-6 py-3 text-[11px] font-bold uppercase tracking-[0.15em] text-neu-heading cursor-pointer"
             style={{ background: "var(--neu-surface-bright)", boxShadow: "0 4px 20px rgba(0,0,0,0.15)" }}
+          onClick={() => {
+            window.location.href = "/contact";
+          }}
           >
                     Start a Conversation
                     <ArrowUpRight className="h-3.5 w-3.5" />
                   </span>
+        </div>
       </section>
 
       {/* ── Desktop layout (GSAP animated) ── */}

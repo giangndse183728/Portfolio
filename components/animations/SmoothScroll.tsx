@@ -45,8 +45,7 @@ export default function SmoothScroll() {
   }, []);
 
   useEffect(() => {
-    if (pathname !== "/") return;
-    if (typeof window !== "undefined" && window.location.hash) {
+    if (pathname === "/" && typeof window !== "undefined" && window.location.hash) {
       window.history.replaceState(null, "", "/");
     }
 

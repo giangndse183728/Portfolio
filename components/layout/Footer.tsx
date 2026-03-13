@@ -115,7 +115,7 @@ export default function Footer() {
             </p>
             <NeuButton
               variant="pill"
-              href="#projects"
+              href="/contact"
               className="justify-center gap-2 !py-2 text-xs tracking-[0.15em] uppercase"
             >
               Say Hello
