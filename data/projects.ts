@@ -245,7 +245,7 @@ export const projects: Project[] = [
             { image: "/images/projects/pento/mobile/achievement.jpg", caption: "Achievement" },
         ],
         webScreens: [
-            { image: "/images/projects/pento/pento.png", caption: "Landing Page" },
+            { image: "/images/projects/pento/pentofood.png", caption: "Landing Page" },
             { image: "/images/projects/pento/dashboard.png", caption: "Admin Dashboard" },
             { image: "/images/projects/pento/pento-landing.png", caption: "Landing Page" },
             { image: "/images/projects/pento/pento-news.png", caption: "Food News" },
