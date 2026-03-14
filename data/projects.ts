@@ -518,7 +518,7 @@ export const projects: Project[] = [
         year: "2026",
         description:
             "A personal portfolio website built with a neumorphic design language, featuring smooth GSAP-driven scroll animations, dark/light theme switching with crossfade transitions, and a curated project showcase — all crafted to reflect a modern, detail-oriented design philosophy.",
-        url: "https://giangnguyen.vercel.app",
+        url: "https://giangnguyen-portfolio.vercel.app",
         tags: ["Portfolio", "Neumorphism", "Next.js", "Animation"],
         role: "Frontend Developer & Designer",
         duration: "2 weeks",

@@ -1,5 +1,19 @@
 import { useEffect, type RefObject } from "react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
+function lockScroll() {
+  document.documentElement.style.overflow = "hidden";
+  document.body.style.overflow = "hidden";
+}
+
+function unlockScroll() {
+  document.documentElement.style.overflow = "";
+  document.body.style.overflow = "";
+  ScrollTrigger.refresh();
+}
 
 export function useHeroIntroAnimation(
   mainContentRef: RefObject<HTMLDivElement>,
@@ -12,6 +26,8 @@ export function useHeroIntroAnimation(
     const mm = gsap.matchMedia();
 
     mm.add("(min-width: 768px)", () => {
+      lockScroll();
+
       gsap.set(mainContentRef.current, { autoAlpha: 0 });
       gsap.set("[data-hero-navbar]", { autoAlpha: 0 });
       gsap.set(avatarRef.current, { xPercent: -50, x: 0 });
@@ -19,7 +35,7 @@ export function useHeroIntroAnimation(
         gsap.set(rightColumnRef.current, { autoAlpha: 0, x: 80 });
       }
 
-      const tl = gsap.timeline().timeScale(1.6);
+      const tl = gsap.timeline({ onComplete: unlockScroll }).timeScale(1.6);
 
       tl.fromTo(
         avatarRef.current,
@@ -69,9 +85,16 @@ export function useHeroIntroAnimation(
           },
           "<",
         );
+
+      return () => {
+        unlockScroll();
+      };
     });
 
-    return () => mm.revert();
+    return () => {
+      mm.revert();
+      unlockScroll();
+    };
   }, [avatarRef, mainContentRef, rightColumnRef]);
 }
 

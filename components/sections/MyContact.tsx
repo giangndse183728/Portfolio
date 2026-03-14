@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useCallback } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import NeuButton from "../ui/NeuButton";
@@ -8,12 +8,30 @@ import { ArrowRight, ArrowUpRight } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
+function useAutoplayVideo() {
+  return useCallback((el: HTMLVideoElement | null) => {
+    if (!el) return;
+    el.muted = true;
+    el.playsInline = true;
+    el.play().catch(() => {
+      const onInteraction = () => {
+        el.play().catch(() => {});
+        document.removeEventListener("click", onInteraction);
+        document.removeEventListener("scroll", onInteraction);
+      };
+      document.addEventListener("click", onInteraction, { once: true });
+      document.addEventListener("scroll", onInteraction, { once: true });
+    });
+  }, []);
+}
+
 export default function MyContact() {
   const sectionRef = useRef<HTMLElement>(null);
   const imageWrapperRef = useRef<HTMLDivElement>(null);
   const myRef = useRef<HTMLSpanElement>(null);
   const visionRef = useRef<HTMLSpanElement>(null);
   const buttonRef = useRef<HTMLDivElement>(null);
+  const videoRef = useAutoplayVideo();
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -139,12 +157,14 @@ export default function MyContact() {
 
         <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl mb-6">
           <video
+            ref={videoRef}
             src="/catwalk.mp4"
             className="h-full w-full object-cover"
             autoPlay
             muted
             loop
             playsInline
+            preload="auto"
           />
         </div>
 
@@ -208,12 +228,14 @@ export default function MyContact() {
             style={{ width: "28%", height: "36%" }}
           >
             <video
+              ref={videoRef}
               src="/catwalk.mp4"
               className="h-full w-full object-cover"
               autoPlay
               muted
               loop
               playsInline
+              preload="auto"
             />
           </div>
         </div>

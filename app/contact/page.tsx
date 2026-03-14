@@ -10,6 +10,9 @@ import {
   MapPin,
   Mail,
   Send,
+  CheckCircle2,
+  AlertCircle,
+  Loader2,
 } from "lucide-react";
 import NeuCard from "@/components/ui/NeuCard";
 import NeuButton from "@/components/ui/NeuButton";
@@ -26,6 +29,8 @@ const contactInfo = [
   { icon: Mail, label: "Email", value: "nguyendonggiang6.6@gmail.com" },
 ];
 
+type Status = "idle" | "sending" | "success" | "error";
+
 export default function ContactPage() {
   const [form, setForm] = useState({
     name: "",
@@ -33,9 +38,35 @@ export default function ContactPage() {
     subject: "",
     message: "",
   });
+  const [status, setStatus] = useState<Status>("idle");
+  const [errorMsg, setErrorMsg] = useState("");
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    setStatus("sending");
+    setErrorMsg("");
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || "Something went wrong.");
+      }
+
+      setStatus("success");
+      setForm({ name: "", email: "", subject: "", message: "" });
+    } catch (err) {
+      setStatus("error");
+      setErrorMsg(
+        err instanceof Error ? err.message : "Failed to send message.",
+      );
+    }
   };
 
   return (
@@ -238,15 +269,38 @@ export default function ContactPage() {
                 </div>
               </label>
 
+              {/* Status feedback */}
+              {status === "success" && (
+                <div className="flex items-center gap-2 rounded-xl bg-green-500/10 px-4 py-3 text-sm text-green-600">
+                  <CheckCircle2 className="h-4 w-4 shrink-0" />
+                  Message sent successfully! I&apos;ll get back to you soon.
+                </div>
+              )}
+              {status === "error" && (
+                <div className="flex items-center gap-2 rounded-xl bg-red-500/10 px-4 py-3 text-sm text-red-500">
+                  <AlertCircle className="h-4 w-4 shrink-0" />
+                  {errorMsg}
+                </div>
+              )}
+
               {/* Submit */}
               <div className="flex justify-end">
                 <NeuButton
                   variant="pill"
-                  type="submit"
-                  className="gap-2 !py-3 !px-8 text-xs tracking-[0.15em] uppercase"
+                  type={status === "sending" ? "button" : "submit"}
+                  className={`gap-2 !py-3 !px-8 text-xs tracking-[0.15em] uppercase ${status === "sending" ? "pointer-events-none opacity-60" : ""}`}
                 >
-                  Send Message
-                  <Send className="h-4 w-4" />
+                  {status === "sending" ? (
+                    <>
+                      Sending…
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    </>
+                  ) : (
+                    <>
+                      Send Message
+                      <Send className="h-4 w-4" />
+                    </>
+                  )}
                 </NeuButton>
               </div>
             </form>

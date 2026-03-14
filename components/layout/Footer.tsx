@@ -26,7 +26,6 @@ const socialLinks = [
 
 const navLinks = [
   { href: "/projects", label: "Projects" },
-  { href: "/about-us", label: "About" },
   { href: "/contact", label: "Contact" },
 ];
 
