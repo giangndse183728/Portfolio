@@ -8,7 +8,7 @@ const TOOL_ICON: Record<string, string> = {
     "Tailwind CSS": "/icon/tailwind.svg",
     Figma: "/icon/figma.svg",
     React: "/icon/react.svg",
-    "Three.js": "/icon/threejs.svg",
+    "Three.js": "/icon/Threejs.svg",
     "Node.js": "/icon/nodejs.svg",
     MongoDB: "/icon/mongodb.svg",
     PostgreSQL: "/icon/postgresql.svg",
