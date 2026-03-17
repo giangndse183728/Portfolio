@@ -1,6 +1,7 @@
 
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter, Audiowide } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next"
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import SmoothScroll from "@/components/animations/SmoothScroll";
@@ -67,6 +68,7 @@ export default function RootLayout({
           </div>
         </ThemeProvider>
       </body>
+      <Analytics />
     </html>
   );
 }
